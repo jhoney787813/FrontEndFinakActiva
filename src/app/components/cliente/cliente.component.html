@@ -1,0 +1,107 @@
+<div class="container mt-5">
+    <div class="row">
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <div class="sow-image-container">
+                    <a href="/">
+                    <img src="https://finaktiva.com/wp-content/uploads/sites/83/2020/12/finaktiva-logo.png" width="600" height="99" alt="" />
+            </a></div>
+              <p class="lead">Base de datos de nuevo clientes</p>
+            </div>
+          </div>
+
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body titulo">
+                    <h5>{{formaction | uppercase}} CLIENTE</h5>
+
+                        <form [formGroup]="form" (ngSubmit)="agregarCliente()">
+
+                            <div class="input-group  input-group-lg  mb-3">
+                                <label class="input-group-text" ><i class="fa-solid fa-id-card" [class.green-validation]="this.form.get('idtipodocref')?.valid" [class.red-validation]="(this.form.get('idtipodocref')?.invalid && this.form.get('idtipodocref')?.touched)||(this.form.get('idtipodocref')?.value=='-1' ||this.form.get('idtipodocref')?.value=='CE') "></i></label>
+                                <select class="form-select" formControlName="idtipodocref"  >
+                                  <option  value="-1"selected>Seleccionar el tipo de documento...</option>
+                                  <option value="CC">(CC) Cédula Ciudadanía</option>
+                                  <option value="NIT">(NIT) Identificación Tributa...</option>
+                                  <option value="CE">(CE) Cédula Extranjeria</option>
+                                  <option value="TI">(TI) Tarjeta Identidad</option>
+                                </select>
+                              </div>
+                             
+                              <div class="input-group  input-group-lg mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-hashtag" [class.green-validation]="this.form.get('identificacion')?.valid" [class.red-validation]="this.form.get('identificacion')?.invalid && this.form.get('identificacion')?.touched"></i></span>
+                                <input type="number" class="form-control"  placeholder="# Identificación"   formControlName="identificacion"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="11" >
+                              </div>
+
+
+                              <div class="input-group input-group-lg mb-3">
+                                <span class="input-group-text" ><i class="fa-solid fa-id-card-clip" [class.green-validation]="this.form.get('nombrecompleto')?.valid" [class.red-validation]="this.form.get('nombrecompleto')?.invalid && this.form.get('nombrecompleto')?.touched"></i></span>
+                                <input type="text" class="form-control" placeholder="Nombre Completo" formControlName="nombrecompleto"   maxlength="150">
+                              </div>
+
+                            <div class="input-group input-group-lg mb-3">
+                                <span class="input-group-text" ><i class="fa-solid fa-user-astronaut" [class.green-validation]="this.form.get('razonsocial')?.valid" [class.red-validation]="this.form.get('razonsocial')?.invalid && this.form.get('razonsocial')?.touched"></i></span>
+                                <input type="text" class="form-control" placeholder="Razón Social"formControlName= "razonsocial" maxlength="150">
+                              </div>
+
+
+                              <div class="input-group  input-group-lg mb-3">
+                                <span class="input-group-text">  <i class="fa-solid fa-people-carry-box" [class.green-validation]="this.form.get('proveedores')?.valid" [class.red-validation]="(this.form.get('proveedores')?.invalid && this.form.get('proveedores')?.touched || this.form.get('proveedores')?.value<0 )" ></i></span>
+                                <input type="number" class="form-control"  placeholder="# Proveedores" formControlName="proveedores" >
+                              </div>
+
+                              <div class="input-group  input-group-lg mb-3">
+                                <span class="input-group-text"><i class="fa-solid fa-dollar-sign" [class.green-validation]="this.form.get('ventas')?.valid" [class.red-validation]="(this.form.get('ventas')?.invalid && this.form.get('ventas')?.touched || this.form.get('ventas')?.value<0 )" ></i></span>
+                                <input type="number" class="form-control"  placeholder="Valor Ventas Último Año"  formControlName="ventas">
+                                <span class="input-group-text">.00</span>
+                              </div>
+
+                              <div class="row">
+                                    <button type="submit" class="btn btn-success btn-lg" [disabled]="this.form.invalid" ><i class="fa-solid fa-floppy-disk" ></i>&nbsp;&nbsp;Guardar</button>
+                              </div>
+                        </form>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body titulo">
+                    <h5>LISTA DE CLIENTES</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              <th>Tipo Doc.</th>
+                              <th>N° Doc.</th>
+                              <th>Nombre Comp.</th>
+                              <th>N° Provee..</th>
+                              <th>N° V. Año</th>
+                            </tr>
+                          </thead>
+                        <tbody>
+                           
+                            <tr *ngFor="let client of listClientes; let i=index">
+                                <td>{{client.idtipodocref}}</td>
+                                <td>{{client.identificacion}}</td>                
+                                <td>{{client.nombrecompleto}}</td>
+                                <td>{{client.proveedores}}</td>
+                                <td>{{client.ventas}}</td>
+                                <td>
+                                    <i  (click)="editarCliente(client)" class="actions fa-solid fa-pen-to-square text-info"></i>
+                                </td>
+                                <td><i  (click)="eliminarCliente(i,client.identificacion)"  class="actions fa-solid fa-trash text-danger"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

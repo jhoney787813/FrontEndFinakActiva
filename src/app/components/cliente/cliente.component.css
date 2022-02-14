@@ -1,0 +1,12 @@
+.actions{
+
+    cursor: pointer;
+
+}
+
+.green-validation{
+    color: #199858;
+}
+.red-validation{
+    color: #c7121b;
+}
